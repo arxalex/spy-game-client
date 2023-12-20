@@ -1,0 +1,11 @@
+<div class="d-flex flex-column h-100vh-h">
+  <p class="align-self-center">Game: <span *ngIf="gameService.isGameStarted" class="text-success">started</span><span *ngIf="!gameService.isGameStarted" class="text-danger">stopped</span></p>
+  <div class="d-flex flex-fill align-self-center align-items-center">
+    <app-timer *ngIf="gameService.isGameStarted"></app-timer>
+    <h1 *ngIf="gameService.isSpy" >You are Spy</h1>
+    <h1 *ngIf="!gameService.isSpy && gameService.isGameStarted" >{{ currentWord }}</h1>
+    <h1 *ngIf="!gameService.isGameStarted" class="text-muted"><i class="bi bi-pause-circle"></i> Paused</h1>
+  </div>
+  <app-current-set class="mb-3 align-self-center"></app-current-set>
+  <button *ngIf="!gameService.isGameStarted" class="btn btn-outline-danger mb-3" (click)="gameService.quitGame()">Leave</button>
+</div>

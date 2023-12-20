@@ -21,7 +21,7 @@ export class UserRepository {
     this.tokenStorage.clearStorage();
   }
 
-  public async login(user: User): Promise<void> {
+  public async isUserExists(user: User): Promise<void> {
     let data = await this.http.post<any>(API_URL, {
       method: "isUserExists",
       user: user
@@ -33,14 +33,39 @@ export class UserRepository {
     this.tokenStorage.saveUser(user);
   }
 
-  public async generateUser(): Promise<void> {
+  public async generateUser(name: string): Promise<void> {
     let data = await this.http.post<any>(API_URL, {
-      method: "generateUser"
+      method: "generateUser",
+      user: {id: 0, pass: '', name: name}
     }, httpOptions).toPromise();
     if(!data){
       throw new Error("Cant register");
     }
 
     this.tokenStorage.saveUser(data);
+  }
+
+  public async getUserInfo(): Promise<User> {
+    let data = await this.http.post<any>(API_URL, {
+      method: "getUserInfo",
+      user: this.tokenStorage.getUser()
+    }, httpOptions).toPromise();
+    if(!data){
+      throw new Error("Cant get user info");
+    }
+
+    return data;
+  }
+
+  public async changeName(user: User): Promise<void> {
+    let data = await this.http.post<any>(API_URL, {
+      method: "changeName",
+      user: user
+    }, httpOptions).toPromise();
+    if (!data || !Boolean(data)) {
+      throw new Error("Cant get user info");
+    }
+
+    return data;
   }
 }

@@ -1,0 +1,7 @@
+<div class="d-flex align-items-center">
+  <p class="m-0 me-2">Current set is <b *ngIf="setService.set.name.length > 0"
+                          (click)="showSetViewer = true">{{ setService.set.name }}</b>
+  <span *ngIf="setService.set.id === 0">(not set)</span></p>
+  <button *ngIf="setService.set.id !== 0" class="btn btn-outline-secondary" (click)="showSetViewer = true">View words</button>
+</div>
+<app-set-viewer-popup *ngIf="showSetViewer" (closeEvent)="showSetViewer = false"></app-set-viewer-popup>

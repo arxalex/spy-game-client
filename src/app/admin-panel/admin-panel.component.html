@@ -1,0 +1,21 @@
+<div class="row d-flex flex-md-row align-items-center h-100vh-h">
+  <div class="card p-3 mb-3">
+    <h3 class="text-center mb-3">Game Panel</h3>
+    <div class="d-flex flex-row justify-content-between mb-2">
+      <div class="pe-2">
+        <p>You can invite member via game id <b>"{{ gameService.getGameId }}"</b>, QR-code or <a
+          class="link-primary" (click)="copyToClipboard()">copy link</a> to share.
+        </p>
+        <p>You are host of this game. Wait for all members and click the button.</p>
+        <app-current-set></app-current-set>
+      </div>
+      <img [src]="gameService.gameQrCode" alt="" >
+    </div>
+    <button *ngIf="!gameService.isGameStarted && setService.set.id !== 0" class="btn btn-primary mb-2" (click)="gameService.startGame()">Start Game!</button>
+    <button *ngIf="gameService.isGameStarted" class="btn btn-danger mb-2" (click)="gameService.stopGame()">Stop Game!</button>
+    <button *ngIf="!gameService.isGameStarted" class="btn btn-secondary mb-2" (click)="showSetPopup = true">Change Set</button>
+    <button *ngIf="!gameService.isGameStarted" class="btn btn-outline-warning" (click)="gameService.quitGame()">Quit</button>
+  </div>
+</div>
+
+<app-set-selector-popup *ngIf="showSetPopup" (closeEvent)="showSetPopup = false"></app-set-selector-popup>

@@ -1,2 +1,8 @@
-<app-top-bar></app-top-bar>
-<app-base-login *ngIf="!loginService.isLoggedIn"></app-base-login>
+<div class="page-wrapper">
+  <app-top-bar></app-top-bar>
+  <div class="container">
+    <app-base-login *ngIf="!gameService.isGameJoined"></app-base-login>
+    <app-game-field *ngIf="gameService.isGameJoined && !gameService.isAdmin"></app-game-field>
+    <app-admin-panel *ngIf="gameService.isAdmin"></app-admin-panel>
+  </div>
+</div>

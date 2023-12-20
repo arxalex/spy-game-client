@@ -1,0 +1,70 @@
+<div class="modal fade show d-block">
+  <div class="modal-dialog modal-fullscreen" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">User</h5>
+        <button class="btn m-0 py-0 px-1 close" (click)="onClose()">
+          <span>×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div *ngIf="userService.isLoggedIn && !loginFormVisible && !nameFormVisible" class="d-flex align-items-center">
+          <p class="flex-fill mb-1">{{userService.userName}}</p>
+          <button class="btn btn-outline-secondary me-2" (click)="copyToClipboard()">Copy user ID</button>
+          <button class="btn btn-warning" (click)="formVisible = true">Change name</button>
+        </div>
+        <div *ngIf="nameFormVisible && !loginFormVisible">
+          <form class="mb-3" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <div class="form-group mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': name.errors && f.submitted}"
+                     id="name" name="name" [(ngModel)]="form.name" required minlength="1" #name="ngModel" maxlength="31"
+                     aria-describedby="validationNameFeedback" placeholder="Enter name">
+              <div id="validationNameFeedback" class="invalid-feedback" role="alert"
+                   *ngIf="name.errors && f.submitted">
+                <div *ngIf="name.errors['required']">Field is required</div>
+                <div *ngIf="name.errors['minlength']">Must be more then 1 symbol</div>
+                <div *ngIf="name.errors['maxlength']">Must be less then 31 symbol</div>
+              </div>
+            </div>
+            <div class="form-group mb-3 d-flex">
+              <button *ngIf="formVisible" class="btn btn-secondary me-2" (click)="formVisible = false"><i class="bi bi-arrow-left"></i></button>
+              <button type="submit" class="btn btn-primary flex-fill">{{ !userService.isLoggedIn ? 'Register' : 'Change Name' }}</button>
+            </div>
+            <div class="form-group">
+              <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isSaveFailed">
+                Error: {{ errorMessage }}
+              </div>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="loginFormVisible && !formVisible">
+          <form class="mb-3" name="loginForm"  (ngSubmit)="f.form.valid && onLoginSubmit()" #f="ngForm" novalidate>
+            <div class="form-group mb-3">
+              <label for="userId" class="form-label">User ID</label>
+              <input type="text" class="form-control" [ngClass]="{'is-invalid': userId.errors && f.submitted}"
+                     id="userId" name="userId" [(ngModel)]="loginForm.userId" required minlength="7" #userId="ngModel"
+                     aria-describedby="validationUserIdFeedback" placeholder="Enter User ID">
+              <div id="validationUserIdFeedback" class="invalid-feedback" role="alert"
+                   *ngIf="userId.errors && f.submitted">
+                <div *ngIf="userId.errors['required']">Field is required</div>
+                <div *ngIf="userId.errors['minlength']">Must be more then 1 symbol</div>
+              </div>
+            </div>
+            <div class="form-group mb-3 d-flex">
+              <button class="btn btn-secondary me-2" (click)="loginFormVisible = false"><i class="bi bi-arrow-left"></i></button>
+              <button type="submit" class="btn btn-primary flex-fill">Login</button>
+            </div>
+            <div class="form-group">
+              <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isLoginFailed">
+                Error: {{ errorMessageLogin }}
+              </div>
+            </div>
+          </form>
+        </div>
+        <a *ngIf="loginButtonVisible" (click)="showLoginForm()" class="link-secondary me-2" >{{ userService.isLoggedIn ? 'Change User' : 'Login' }}</a>
+        <a *ngIf="userService.isLoggedIn" (click)="userService.logout()" class="link-danger" >Logout</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="modal fade show d-block">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLiveLabel">Set Editor</h5>
+        <button class="btn m-0 py-0 px-1 close" (click)="onClose()">
+          <span>×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="mb-3" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+          <div class="form-group mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': name.errors && f.submitted}"
+                   id="name" name="name" [(ngModel)]="form.name" required minlength="1" #name="ngModel"
+                   aria-describedby="validationNameFeedback" placeholder="Enter set`s name">
+            <div id="validationNameFeedback" class="invalid-feedback" role="alert"
+                 *ngIf="name.errors && f.submitted">
+              <div *ngIf="name.errors['required']">Field is required</div>
+              <div *ngIf="name.errors['minlength']">Must be more then 1 symbol</div>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label for="words" class="form-label">Name</label>
+            <textarea class="form-control" [ngClass]="{'is-invalid': words.errors && f.submitted}"
+                      id="words" name="words" [(ngModel)]="form.words" required minlength="1" #words="ngModel"
+                      aria-describedby="validationWordsFeedback" placeholder="Enter set`s words. Enter each word from new line."></textarea>
+            <div id="validationWordsFeedback" class="invalid-feedback" role="alert"
+                 *ngIf="words.errors && f.submitted">
+              <div *ngIf="words.errors['required']">Field is required</div>
+              <div *ngIf="words.errors['minlength']">Must be more then 1 symbol</div>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <button type="submit" class="btn btn-primary w-100">Submit</button>
+          </div>
+          <div class="form-group">
+            <div class="alert alert-danger" role="alert" *ngIf="f.submitted && isSaveFailed">
+              Error: {{ errorMessage }}
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiHost: 'https://api.priceapp.co/',
+  apiHost: 'https://apps.arxalex.co/spy/controllers/',
+  clientLink: 'https://apps.arxalex.co/spy'
 };
