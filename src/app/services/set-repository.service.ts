@@ -45,14 +45,14 @@ export class SetRepository {
     return data;
   }
 
-  public async updateSet(set: Set, words: Array<Word>, user: User): Promise<SetWordsRepositoryModel> {
+  public async updateSet(set: Set, words: Array<Word>, user: User): Promise<void> {
     let data = await this.http.post<any>(API_URL, {
       method: "updateSet",
       set: set,
       words: words,
       user: user
     }, httpOptions).toPromise();
-    if (!data) {
+    if (!data && !Boolean(data)) {
       throw new Error("Cant update set");
     }
 
@@ -68,5 +68,28 @@ export class SetRepository {
     if (!data || !Boolean(data)) {
       throw new Error("Cant delete set");
     }
+  }
+
+  public async getList(user: User): Promise<Set[]> {
+    let data = await this.http.post<any>(API_URL, {
+      method: "getList",
+      user: user
+    }, httpOptions).toPromise();
+    if (!data) {
+      throw new Error("Cant get set list");
+    }
+
+    return data;
+  }
+
+  public async getListPublic(user: User): Promise<Set[]> {
+    let data = await this.http.post<any>(API_URL, {
+      method: "getListPublic"
+    }, httpOptions).toPromise();
+    if (!data) {
+      throw new Error("Cant get set list");
+    }
+
+    return data;
   }
 }

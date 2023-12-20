@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenStorageService } from './services/token-storage.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import {UserService} from "./services/user.service";
+import {GameService} from "./services/game.service";
 
 @Component({
   selector: 'app-root',
@@ -10,14 +11,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AppComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
-    private tokenService: TokenStorageService,
+    public userService: UserService,
+    public gameService: GameService
     ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.route.queryParams.subscribe(params => {
       let gameId: string = params['game'];
       if(gameId != null && gameId.length > 0){
-        //this.loginService.JoinGame(gameId);
+        this.gameService.joinGame(gameId);
       }
     });
   }

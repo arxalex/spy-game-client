@@ -9,5 +9,7 @@
         <img class="d-inline" height="25px" src="/assets/arxlogo.svg">
       </a>
     </div>
+    <i (click)="userPopupVisible = true" class="bi bi-person-fill"></i>
   </div>
 </nav>
+<app-user-popup *ngIf="userPopupVisible" (closeEvent)="userPopupVisible = false"></app-user-popup>

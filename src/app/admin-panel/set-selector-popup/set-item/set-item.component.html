@@ -1,0 +1,9 @@
+<div class="d-flex align-items-center mb-2">
+  <p class="me-2 text-muted">{{ setItem.id }}</p>
+  <p class="flex-fill">{{ setItem.name }}</p>
+  <div class="btn-group" role="group">
+    <button *ngIf="isMySet" (click)="onEdit()" class="btn btn-outline-warning"><i class="bi bi-pencil-fill"></i></button>
+    <button *ngIf="isMySet" (click)="onDelete()" class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i></button>
+    <button (click)="onSelect()" class="btn btn-outline-success"><i [ngClass]="isSetSelected ? 'bi bi-check2-all' : 'bi bi-check-lg'"></i></button>
+  </div>
+</div>

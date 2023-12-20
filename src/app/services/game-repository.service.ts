@@ -103,9 +103,9 @@ export class GameRepository {
     }
   }
 
-  public async changeSet(game: Game, user: User): Promise<void> {
+  public async changeMode(game: Game, user: User): Promise<void> {
     let data = await this.http.post<any>(API_URL, {
-      method: "changeSet",
+      method: "changeMode",
       game: game,
       user: user
     }, httpOptions).toPromise();
@@ -114,4 +114,16 @@ export class GameRepository {
     }
   }
 
+  public async isAdmin(game: Game, user: User): Promise<boolean> {
+    let data = await this.http.post<any>(API_URL, {
+      method: "isAdmin",
+      game: game,
+      user: user
+    }, httpOptions).toPromise();
+    if (data === null) {
+      throw new Error("Cant get admin info");
+    }
+
+    return data;
+  }
 }
