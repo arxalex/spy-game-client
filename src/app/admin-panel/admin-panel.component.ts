@@ -17,6 +17,7 @@ export class AdminPanelComponent {
   }
 
   public copyToClipboard(): void {
-    this.clipboard.copy(this.gameService.getGameId);
+    const gameLink = "https://apps.arxalex.co/spy?game=" + this.gameService.getGameId;
+    this.clipboard.copy(gameLink);
   }
 }

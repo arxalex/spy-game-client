@@ -1,5 +1,5 @@
 <div class="row d-flex flex-md-row align-items-center h-100vh-h">
-  <div class="card p-3 mb-3">
+  <div class="card p-3 mb-3 col-lg-6">
     <h3 class="text-center mb-3">Game Panel</h3>
     <div class="d-flex flex-row justify-content-between mb-2">
       <div class="pe-2">
@@ -15,6 +15,10 @@
     <button *ngIf="gameService.isGameStarted" class="btn btn-danger mb-2" (click)="gameService.stopGame()">Stop Game!</button>
     <button *ngIf="!gameService.isGameStarted" class="btn btn-secondary mb-2" (click)="showSetPopup = true">Change Set</button>
     <button *ngIf="!gameService.isGameStarted" class="btn btn-outline-warning" (click)="gameService.quitGame()">Quit</button>
+  </div>
+  <div class="col-lg-6">
+    <h3>Users</h3>
+    <app-user-item *ngFor="let userItem of gameService.users" [userItem]="userItem"></app-user-item>
   </div>
 </div>
 

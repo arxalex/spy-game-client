@@ -126,4 +126,17 @@ export class GameRepository {
 
     return data;
   }
+
+  public async getUsers(game: Game, user: User): Promise<User[]> {
+    let data = await this.http.post<any>(API_URL, {
+      method: "getUsers",
+      game: game,
+      user: user
+    }, httpOptions).toPromise();
+    if (!data) {
+      throw new Error("Cant get users");
+    }
+
+    return data;
+  }
 }
