@@ -27,6 +27,7 @@ import { CurrentSetComponent } from './game-field/current-set/current-set.compon
 import { WordItemComponent } from './game-field/current-set/set-viewer-popup/word-item/word-item.component';
 import { UserPopupComponent } from './user-popup/user-popup.component';
 import { TimerComponent } from './game-field/timer/timer.component';
+import { UserItemComponent } from './admin-panel/user-item/user-item.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { TimerComponent } from './game-field/timer/timer.component';
     CurrentSetComponent,
     WordItemComponent,
     UserPopupComponent,
-    TimerComponent
+    TimerComponent,
+    UserItemComponent
   ],
   imports: [
     BrowserModule,

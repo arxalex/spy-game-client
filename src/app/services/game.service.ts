@@ -6,6 +6,7 @@ import {environment} from "../../environments/environment";
 import {Game} from "../models/game";
 import {ExchangeService} from "./exchange.service";
 import {TimerService} from "./timer.service";
+import {User} from "../models/user";
 
 @Injectable({
   providedIn: 'root'
@@ -25,10 +26,12 @@ export class GameService {
     stoptime: undefined
   };
   private gameStarted: boolean = false;
+  private _users: User[] = [];
   private updateGameServiceFunction: () => Promise<void> = async (): Promise<void> => {
     //this.checkJoin();
     await this.checkGame();
     await this.checkAdmin();
+    await this.checkUsers();
   }
 
   private updateGameFunction: () => Promise<void> = async (): Promise<void> => {
@@ -98,6 +101,10 @@ export class GameService {
     return this.joined;
   }
 
+  public get users(): User[] {
+    return this._users;
+  }
+
   public get isAdmin(): boolean {
     return this.isGameJoined && this.admin;
   }
@@ -142,6 +149,16 @@ export class GameService {
       this.admin = false;
     }
     this.exchangeService.adminMode = this.admin;
+  }
+
+  private async checkUsers(): Promise<void> {
+    if (this.joined && this.isAdmin) {
+      try {
+        this._users = await this.gameRepository.getUsers(this.tokenStorage.getGame(), this.tokenStorage.getUser());
+      } catch (error) {
+        // TODO: show popup
+      }
+    }
   }
 
   private checkJoin(): void {
@@ -213,6 +230,7 @@ export class GameService {
     this.exchangeService.setId = undefined;
     this.admin = false;
     this.joined = false;
+    this._users = [];
   }
 
   public async setSet(id: number): Promise<void> {
@@ -243,5 +261,13 @@ export class GameService {
 
   private onGameStops(): void {
     this.timerService.stopGameInterval();
+  }
+
+  public async kickUser(id: number): Promise<void> {
+    try {
+      await this.gameRepository.kickUser(this.game, this.tokenStorage.getUser(), id);
+    } catch (e) {
+      // TODO: show popup
+    }
   }
 }

@@ -7,5 +7,5 @@
     <h1 *ngIf="!gameService.isGameStarted" class="text-muted"><i class="bi bi-pause-circle"></i> Paused</h1>
   </div>
   <app-current-set class="mb-3 align-self-center"></app-current-set>
-  <button *ngIf="!gameService.isGameStarted" class="btn btn-outline-danger mb-3" (click)="gameService.quitGame()">Leave</button>
+  <button *ngIf="!gameService.isGameStarted" class="btn btn-outline-danger mb-3" (click)="gameService.leaveGame()">Leave</button>
 </div>
