@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiHost: 'https://apps.arxalex.co/api/spy/controllers/',
-  clientLink: 'https://apps.arxalex.co/spy'
+  apiHost: 'https://apps.arxalex.com/api/spy/controllers/',
+  clientLink: 'https://apps.arxalex.com/spy'
 };
 
 /*
