@@ -16,7 +16,7 @@ jobs:
       - name: Install NPM and Build Angular Project
         run: |  
           npm install
-          npm run build
+          npm run build --base-href /spy/
       
       # Here is the deployment action
       - name: Upload from output to a remote server via FTP
