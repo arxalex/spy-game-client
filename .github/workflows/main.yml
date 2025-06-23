@@ -1,30 +1,25 @@
-name: 🚀 Deploy
+name: Deploy to GitHub Pages
+
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+
+permissions:
+  contents: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest code
-        uses: actions/checkout@v2
-      - name: Use Node.js 18
-        uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '18'
-      - name: Install NPM and Build Angular Project
-        run: |  
-          npm install
-          npm run build-prod
-      
-      # Here is the deployment action
-      - name: Upload from output to a remote server via FTP
-        uses: modern-dev/ftp-mirror@v2
+          node-version: '24'
+      - run: npm ci
+      - run: npm run build-prod
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          user: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local_dir: "./dist/spy-game"
-          remote_dir: "./spy"
-          delete: "false"
+          branch: gh-pages
+          folder: dist/spy-game
