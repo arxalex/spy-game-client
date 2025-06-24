@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {GameService} from "../services/game.service";
 import {SetService} from "../services/set.service";
 import { Clipboard } from "@angular/cdk/clipboard";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-admin-panel',
@@ -17,7 +18,7 @@ export class AdminPanelComponent {
   }
 
   public copyToClipboard(): void {
-    const gameLink = "https://apps.arxalex.com/spy?game=" + this.gameService.getGameId;
+    const gameLink = environment.clientLink + "?game=" + this.gameService.getGameId;
     this.clipboard.copy(gameLink);
   }
 }
